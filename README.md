@@ -90,8 +90,8 @@ contains
 ## Subfolder: ./Result ##
 `./Result`
 contains
-- (1) **Figure1.pdf** Figure 1 displays, in the top panel, the longitudinal trajectories of $\log_10(RNA)$ responses from 481 patients, overlaid with boxplots at each scheduled visit (Day 0, 2, 4, 8, 16, and 24). The bottom panel presents the corresponding bar chart of the number and percentage of observed responses at each time point, illustrating the extent of missing data across the study period.
-- (2) **Figure2.pdf** displays estimated fixed effects parameters (solid line) and 95% confidence intervals (dashed lines) from the fitted tNLME model with MNAR.
+- (1) **Figure1.eps** Figure 1 displays, in the top panel, the longitudinal trajectories of $\log_10(RNA)$ responses from 481 patients, overlaid with boxplots at each scheduled visit (Day 0, 2, 4, 8, 16, and 24). The bottom panel presents the corresponding bar chart of the number and percentage of observed responses at each time point, illustrating the extent of missing data across the study period.
+- (2) **Figure2.eps** displays estimated fixed effects parameters (solid line) and 95% confidence intervals (dashed lines) from the fitted tNLME model with MNAR.
 - (3) **Table1.csv** lists the fitting results for the 24 candidate models, including the number of unknown parameters, maximized log-likelihood values together with AIC and BIC scores for determining the preferred model.
 - (4) **Table2.csv** presents a comparison of the ML estimates of parameters together with their standard errors (SE) obtained from the tNLME model with AR(1) errors under the three mechanisms.
 
@@ -145,8 +145,8 @@ contains the program (function) of
 ## Subfolder: ./Result ##
 `./Result`
 contains
-- (1) **FigureB1.pdf** shows the trajectory plot of responses for one simulated case of size N = 100 (left panel), box plots for responses for subjects (right top panel), and bar chart of frequency distribution of number of observed responses  in the two prespecified groups (right bottom panel).
-- (2) **FigureB2.pdf** shows the MSE scores for the estimated parameters under fitted tNLME model with the MNAR mechanism for three dropout rates across various sample sizes.
+- (1) **FigureB1.eps** shows the trajectory plot of responses for one simulated case of size N = 100 (left panel), box plots for responses for subjects (right top panel), and bar chart of frequency distribution of number of observed responses  in the two prespecified groups (right bottom panel).
+- (2) **FigureB2.eps** shows the MSE scores for the estimated parameters under fitted tNLME model with the MNAR mechanism for three dropout rates across various sample sizes.
 - (3) **TableB1.csv** lists the simulation results for assessing the asymptotic standard errors (IM SE) and empirical standard deviations (MC Sd) of parameters estimates under fitted tNLME model with the MNAR mechanism across various sample sizes.
 - (4) **TableB2.csv** reports the average AIC, BIC, and MSPE scores together with frequencies (in parentheses) supported by the two criteria for the NLME and tNLME models with various sample sizes and dropout rates. The result for the best performance per row is highlighted in bold.
 - (5) **TableB3.csv** summarizes the average AIC and BIC values, together with the frequencies (in parentheses) of model selection based on these criteria, for the tNLME models fitted under the MCAR, MAR, and MNAR mechanisms across different sample sizes and dropout proportions.
