@@ -1,14 +1,14 @@
 ################################################################################
 #
 #   Filename    :    Fig1.R
-#   Project     :    "Robust HIV Viral Dynamics: A Nonlinear Mixed-Effects Framework for
+#   Project     :    BiomJ article "Robust HIV Viral Dynamics: A Nonlinear Mixed-Effects Framework for
 #                    Heavy-Tailed Data with Informative Dropout"
-#   Authors     :    Yu-Chen Yang, Tsung-I Lin, Luis M. Castro, and Wan-Lun Wang
+#   Authors     :    Yu-Chen Yang and Tsung-I Lin and Luis M. Castro and Wan-Lun Wang
 #   Date        :    14.03.2026
 #   Purpose     :    produce Figure 1 for AIDS data
 #
 #   Input data files  :  Data_and_Code/Data/source/actg398.txt
-#   Output data files :  Data_and_Code/results/Figure1.pdf
+#   Output data files :  Data_and_Code/results/Figure1.eps
 #
 #   R Version   :    R-4.3.1
 #   Required R packages : ggplot2; ggtext; nlme; mvtnorm
@@ -84,7 +84,7 @@ for (i in 1:N)
 
 actg398.miss[which(actg398.miss$txday == -1 | actg398.miss$txday == 0), ]
 library(ggplot2)
-kk <- ggplot(data = actg398.miss[!is.na(actg398.miss$logrna),], aes(x = txday, y = logrna, group = as.factor(patid))) +
+kk <- ggplot(data = actg398.miss, aes(x = txday, y = logrna, grop = as.factor(patid))) +
   geom_line() +
   xlab("Day") +
   ylab("log(RNA)") +
@@ -103,7 +103,7 @@ nj <- numeric(n)
 for (i in 1:n) nj[i] <- length(actg398.miss$Dayt[actg398$Subject == Subject[i]])
 
 
-ya1 <- ggplot(data = actg398.miss[!is.na(actg398.miss$logrna),], aes(x = Time, y = logrna, group = as.factor(Subject))) +
+ya1 <- ggplot(data = actg398.miss, aes(x = Time, y = logrna, group = as.factor(Subject))) +
   geom_line(aes(group = as.factor(Subject))) +
   geom_point() +
   xlab("Time") +
@@ -160,6 +160,6 @@ source(paste0(PATH, "/function/multiplot.R"))
 layout <- matrix(c(1, 2), ncol = 1, byrow = TRUE)
 multiplot(plotlist = list(kk, k5), layout = layout)
 
-pdf(paste0(PATH, "/Result/Figure1.pdf"), width = 10, height = 8, paper = "special")
+postscript(paste0(PATH, "/Result/Figure1.eps"), width = 10, height = 8, paper = "special")
 multiplot(plotlist = list(kk, k5), layout = layout)
 dev.off()

@@ -1,14 +1,14 @@
 ################################################################################
 #
 #   Filename    :    FigB1.R
-#   Project     :    "Robust HIV Viral Dynamics: A Nonlinear Mixed-Effects Framework for
+#   Project     :    BiomJ article "Robust HIV Viral Dynamics: A Nonlinear Mixed-Effects Framework for
 #                    Heavy-Tailed Data with Informative Dropout"
-#   Authors     :    Yu-Chen Yang, Tsung-I Lin, Luis M. Castro, and Wan-Lun Wang
+#   Authors     :    Yu-Chen Yang and Tsung-I Lin and Luis M. Castro and Wan-Lun Wang
 #   Date        :    14.03.2026
 #   Purpose     :    produce Figure B.1 for Simulation
 #
 #   Input data files  :  None
-#   Output data files :  Data_and_Code/results/FigureB1.pdf
+#   Output data files :  Data_and_Code/results/FigureB1.eps
 #
 #   R Version   :    R-4.3.1
 #   Required R packages : ggplot2; ggtext; mvtnorm; nlme
@@ -104,6 +104,6 @@ source(paste0(PATH, "/function/multiplot.R"))
 layout <- matrix(c(1, 2, 1, 3), nrow = 2, byrow = TRUE)
 multiplot(plotlist = list(k1, k2, k3), layout = layout)
 
-pdf(paste0(PATH, "/Result/FigureB1.pdf"), width = 14, height = 10)
+postscript(paste0(PATH, "/Result/FigureB1.eps"), width = 14, height = 10)
 multiplot(plotlist = list(k1, k2, k3), layout = layout)
 dev.off()

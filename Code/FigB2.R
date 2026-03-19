@@ -1,14 +1,14 @@
 ################################################################################
 #
 #   Filename    :    FigB2.R
-#   Project     :    "Robust HIV Viral Dynamics: A Nonlinear Mixed-Effects Framework for
+#   Project     :    BiomJ article "Robust HIV Viral Dynamics: A Nonlinear Mixed-Effects Framework for
 #                    Heavy-Tailed Data with Informative Dropout"
-#   Authors     :    Yu-Chen Yang, Tsung-I Lin, Luis M. Castro, and Wan-Lun Wang
+#   Authors     :    Yu-Chen Yang and Tsung-I Lin and Luis M. Castro and Wan-Lun Wang
 #   Date        :    14.03.2026
 #   Purpose     :    produce Figure B.2 for Simulation
 #
 #   Input data files  :  None
-#   Output data files :  Data_and_Code/results/FigureB2.pdf
+#   Output data files :  Data_and_Code/results/FigureB2.eps
 #
 #   R Version   :    R-4.3.1
 #   Required R packages : ggplot2; ggtext; cowplot; rlang
@@ -337,9 +337,9 @@ mse.sim2 <- ggplot(data = ppcTotal, aes(x = sample, y = value, colour = missing,
   theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
 
 source(paste(PATH, "/function/multiplot.R", sep = ""))
-aa <- matrix(c(1), nrow = 1, byrow = TRUE)
-multiplot(plotlist = list(mse.sim2), layout = aa)
+layout <- matrix(c(1), nrow = 1, byrow = TRUE)
+multiplot(plotlist = list(mse.sim2), layout = layout)
 
-pdf(paste0(PATH, "/Result/FigureB2.pdf"), width = 12, height = 11, paper = "special")
+postscript(paste0(PATH, "/Result/FigureB2.eps"), width = 12, height = 10, paper = "special")
 multiplot(plotlist = list(mse.sim2), layout = layout)
 dev.off()
