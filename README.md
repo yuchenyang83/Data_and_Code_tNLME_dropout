@@ -126,7 +126,7 @@ To inspect a Scenario (I) or Scenario (II) fit, first load **fit_I_result.RData*
 The files stored directly in `./Data` are:
 
 - (1) **fit_I_result.RData**: collects the fitted NLME and tNLME models for random-effects Scenario (I) across the missingness mechanisms and within-subject correlation structures used in Table 1.
-- (2) **fit_II_result.RData**: collects the fitted NLME and tNLME models for random-effects Scenario (I) across the missingness mechanisms and within-subject correlation structures used in Table 1.
+- (2) **fit_II_result.RData**: collects the fitted NLME and tNLME models for random-effects Scenario (II) across the missingness mechanisms and within-subject correlation structures used in Table 1.
 - (3) **fit_III_result.RData**: collects the fitted models for random-effects Scenario (III), including the objects used in Figure 1 and Tables 1-2.
 - (4) **fit_III_result_nls.RData**: collects the Scenario (III) NLME and tNLME fits obtained using the alternative pooled-`nls` initialization for Tables D.1 and D.2.
 - (5) **fit.t.III.ARp.MNAR5000.RData**: stores the selected Scenario (III) AR(1) tNLME MNAR fit run for up to 5000 SAEM iterations for Appendix E and Figure E.1.
