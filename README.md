@@ -44,7 +44,7 @@ Before running the codes, install the following R packages:
 R codes for the implementation of our methodology for an ACTG 398 dataset and simulation results are provided.
 
 ## File: ./master.R ##
-**master.R** is the main reproduction script. It loads the required packages and sequentially sources the scripts that reproduce Figures 1, 2, B.1, B.2, B.3, and E.1 and Tables 1, 2, B.1, B.2, B.3, D.1, D.2, and F.1 from the stored fitted objects and intermediate simulation results.
+**master.R** is the main reproduction script. It loads the required packages and sequentially sources the scripts that reproduce Figures 1, 2, D.1, F.1, F.2, and F.3 and Tables 1, 2, C.1, C.2, E.1, F.1, F.2, and F.3 from the stored fitted objects and intermediate simulation results.
 
 The master script does not rerun the computationally intensive ACTG 398 model fitting or Monte Carlo simulation studies.
 
@@ -54,9 +54,9 @@ The master script does not rerun the computationally intensive ACTG 398 model fi
 - (1) **tNLMMmissingSAEM.R**: main SAEM function for fitting the tNLME model with incomplete longitudinal responses under MCAR, MAR, or MNAR.
 - (2) **NLMMmissingSAEM.R**: main SAEM function for fitting the NLME model with incomplete longitudinal responses under MCAR, MAR, or MNAR.
 - (3) **analyze_realdata_AIDS.R**: supporting functions for the ACTG 398 analysis, including the nonlinear mean model, derivatives, correlation matrices, likelihood calculations, missing-response updates, and related computational steps.
-- (4) **tNLMMmissingSAEM_sensitivity.R**: tNLME SAEM function used for the Metropolis-Hastings tuning sensitivity analysis reported in Appendix F.
+- (4) **tNLMMmissingSAEM_sensitivity.R**: tNLME SAEM function used for the Metropolis-Hastings tuning sensitivity analysis reported in Appendix E.
 - (5) **NLMMmissingSAEM_sensitivity.R**: NLME SAEM function used for the corresponding Metropolis-Hastings tuning sensitivity analysis.
-- (6) **analyze_realdata_AIDS_sensitivity.R**: supporting functions used by the Appendix F tuning-sensitivity analysis.
+- (6) **analyze_realdata_AIDS_sensitivity.R**: supporting functions used by the Appendix E tuning-sensitivity analysis.
 - (7) **multiplot.R**: utility function for arranging multiple `ggplot2` objects in a common layout.
 
 ## Subfolder: ./function/fix_alpha ##
@@ -75,9 +75,9 @@ The master script does not rerun the computationally intensive ACTG 398 model fi
 # Subfolder: ./Code #
 `./Code` contains all model-fitting, simulation, diagnostic, figure, and table scripts:
 
-- (1) **fit_actg398.R**: main computational script for fitting the NLME and tNLME models under MCAR, MAR, and MNAR across random-effects Scenarios (I)-(III) and four within-subject correlation structures: UNC, CS, AR(1), and MA(1). The script also contains the Scenario (III) fits based on pooled nonlinear least-squares (`nls`) initial values for Appendix D and the 5000-iteration Scenario (III) AR(1) tNLME MNAR fit used in Appendix E.
+- (1) **fit_actg398.R**: main computational script for fitting the NLME and tNLME models under MCAR, MAR, and MNAR across random-effects Scenarios (I)-(III) and four within-subject correlation structures: UNC, CS, AR(1), and MA(1). The script also contains the Scenario (III) fits based on pooled nonlinear least-squares (`nls`) initial values for Appendix C and the 5000-iteration Scenario (III) AR(1) tNLME MNAR fit used in Appendix D.
 - (2) **fit_actg398_fixalpha.R**: main computational script for the Figure 2 sensitivity analysis. It fits the selected Scenario (III) AR(1) tNLME model under MNAR with alpha2 fixed over the prespecified grid from -6 to 6.
-- (3) **fit_actg398_sensitivity.R**: main computational script for Appendix F. It refits the Scenario (III) AR(1) tNLME model under MCAR, MAR, and MNAR for the Metropolis-Hastings tuning settings reported in Table F.1.
+- (3) **fit_actg398_sensitivity.R**: main computational script for Appendix E. It refits the Scenario (III) AR(1) tNLME model under MCAR, MAR, and MNAR for the Metropolis-Hastings tuning settings reported in Table F.1.
 - (4) **simSAEM25.R**: main script for the primary heavy-tailed simulation with approximately 25% dropout across sample sizes N = 25, 50, 100, 200, and 400.
 - (5) **simSAEM50.R**: main script for the primary heavy-tailed simulation with approximately 50% dropout across sample sizes N = 25, 50, 100, 200, and 400.
 - (6) **simSAEM75.R**: main script for the primary heavy-tailed simulation with approximately 75% dropout across sample sizes N = 25, 50, 100, 200, and 400.
@@ -87,27 +87,29 @@ The master script does not rerun the computationally intensive ACTG 398 model fi
 - (10) **diagnostic_information.R**: general diagnostic utility for an already fitted NLME or tNLME object. It returns the approximated observed-data log-likelihood trajectory, parameter trace plots, parameter-estimate summaries, Metropolis-Hastings acceptance-rate summaries, and the mapping between the reported parameters and the stored parameter-trace columns.
 - (11) **Fig1.R**: main script for reproducing Figure 1.
 - (12) **Fig2.R**: main script for reproducing Figure 2.
-- (13) **FigB1.R**: main script for reproducing Figure B.1.
-- (14) **FigB2.R**: main script for reproducing Figure B.2.
-- (15) **FigB3.R**: main script for reproducing Figure B.3.
-- (16) **FigE1.R**: main script for reproducing Figure E.1, which displays the 5000-iteration approximated observed-data log-likelihood trajectory used to assess the stopping criterion.
+- (13) **FigD1.R**: main script for reproducing Figure D.1, which displays the 5000-iteration approximated observed-data log-likelihood trajectory used to assess the stopping criterion.
+- (14) **FigF1.R**: main script for reproducing Figure F.1.
+- (15) **FigF2.R**: main script for reproducing Figure F.2.
+- (16) **FigF3.R**: main script for reproducing Figure F.3.
 - (17) **Tab1.R**: main script for reproducing Table 1.
 - (18) **Tab2.R**: main script for reproducing Table 2.
-- (19) **TabB1.R**: main script for reproducing Table B.1.
-- (20) **TabB2.R**: main script for reproducing Table B.2.
-- (21) **TabB3.R**: main script for reproducing Table B.3.
-- (22) **TabD1.R**: main script for reproducing Table D.1 under the alternative pooled-`nls` initialization.
-- (23) **TabD2.R**: main script for reproducing Table D.2 under the alternative pooled-`nls` initialization.
-- (24) **TabF1.R**: main script for reproducing Table F.1, which summarizes the Metropolis-Hastings tuning sensitivity analysis.
+- (19) **TabC1.R**: main script for reproducing Table C.1 under the alternative pooled-`nls` initialization.
+- (20) **TabC2.R**: main script for reproducing Table C.2 under the alternative pooled-`nls` initialization.
+- (21) **TabE1.R**: main script for reproducing Table E.1, which summarizes the Metropolis-Hastings tuning sensitivity analysis.
+- (22) **TabF1.R**: main script for reproducing Table F.1.
+- (23) **TabF2.R**: main script for reproducing Table F.2.
+- (24) **TabF3.R**: main script for reproducing Table F.3.
 
 ### Diagnostic information ###
 The diagnostic function can be applied to any compatible fitted object after the corresponding `.RData` file has been loaded. For example:
 
 ```r
-load("D:/Data_and_Code/Data/fit_III_result.RData")
-source("D:/Data_and_Code/Code/diagnostic_information.R")
+PATH <- normalizePath(getwd(), winslash = "/", mustWork = TRUE)
 
-gg = diagnostic_information(fit.t.III.ARp.MNAR)
+load(file.path(PATH, "Data", "fit_III_result.RData"))
+source(file.path(PATH, "Code", "diagnostic_information.R"))
+
+gg <- diagnostic_information(fit.t.III.ARp.MNAR)
 
 gg$loglik.plot
 gg$trace.plot
@@ -128,8 +130,8 @@ The files stored directly in `./Data` are:
 - (1) **fit_I_result.RData**: collects the fitted NLME and tNLME models for random-effects Scenario (I) across the missingness mechanisms and within-subject correlation structures used in Table 1.
 - (2) **fit_II_result.RData**: collects the fitted NLME and tNLME models for random-effects Scenario (II) across the missingness mechanisms and within-subject correlation structures used in Table 1.
 - (3) **fit_III_result.RData**: collects the fitted models for random-effects Scenario (III), including the objects used in Figure 1 and Tables 1-2.
-- (4) **fit_III_result_nls.RData**: collects the Scenario (III) NLME and tNLME fits obtained using the alternative pooled-`nls` initialization for Tables D.1 and D.2.
-- (5) **fit.t.III.ARp.MNAR5000.RData**: stores the selected Scenario (III) AR(1) tNLME MNAR fit run for up to 5000 SAEM iterations for Appendix E and Figure E.1.
+- (4) **fit_III_result_nls.RData**: collects the Scenario (III) NLME and tNLME fits obtained using the alternative pooled-`nls` initialization for Tables C.1 and C.2.
+- (5) **fit.t.III.ARp.MNAR5000.RData**: stores the selected Scenario (III) AR(1) tNLME MNAR fit run for up to 5000 SAEM iterations for Appendix D and Figure D.1.
 
 The subfolders in `./Data` are described below.
 
@@ -154,7 +156,7 @@ The folder also contains:
 - **fixed_alpha.txt**: intermediate summary containing the fixed alpha2 values, fixed-effect estimates, standard errors, and confidence-limit information used by **Fig2.R**.
 
 ## Subfolder: ./Data/sensitivity_SAEM ##
-`./Data/sensitivity_SAEM` contains the stored Scenario (III) AR(1) tNLME fits used for the Metropolis-Hastings tuning sensitivity analysis in Appendix F.
+`./Data/sensitivity_SAEM` contains the stored Scenario (III) AR(1) tNLME fits used for the Metropolis-Hastings tuning sensitivity analysis in Appendix E.
 
 The fitted-object filenames have the form
 
@@ -170,7 +172,7 @@ Thus, the current sensitivity analysis contains 27 fitted objects: 3 missingness
 
 The folder also contains:
 
-- **TableF1_raw.txt**: intermediate file containing the extracted K value, missingness mechanism, proposal scaling constant c, number of estimated parameters, approximated observed-data log-likelihood, and overall Metropolis-Hastings acceptance rate used to construct Table F.1.
+- **TableE1_raw.txt**: intermediate file containing the extracted K value, missingness mechanism, proposal scaling constant c, number of estimated parameters, approximated observed-data log-likelihood, and overall Metropolis-Hastings acceptance rate used to construct Table E.1.
 
 The implementation details for these tuning settings are provided in **fit_actg398_sensitivity.R**.
 
@@ -248,6 +250,7 @@ Each `SIM1`-`SIM5` subfolder contains:
 # Additional Remarks #
 - Note (1): **master.R** reproduces the reported figures and tables from the stored fitted objects and intermediate simulation files. The computationally intensive fitting and simulation scripts are not sourced by `master.R`.
 - Note (2): **fit_actg398.R**, **fit_actg398_fixalpha.R**, and **fit_actg398_sensitivity.R** can require substantial computation because they refit the ACTG 398 models. The fitted objects needed for reproducing the reported figures and tables are already stored under `./Data`.
-- Note (3): **simSAEM25.R**, **simSAEM50.R**, **simSAEM75.R**, **simSAEMt25-50.R**, **simSAEMt50-50.R**, and **simSAEMt75-50.R** can also require substantial computation. The intermediate numerical results used by Figures B.1-B.3 and Tables B.1-B.3 are already stored under `./Data/simulation`.
+- Note (3): **simSAEM25.R**, **simSAEM50.R**, **simSAEM75.R**, **simSAEMt25-50.R**, **simSAEMt50-50.R**, and **simSAEMt75-50.R** can also require substantial computation. The intermediate numerical results used by Figures F.1-F.3 and Tables B.1-B.3 are already stored under `./Data/simulation`.
 - Note (4): To diagnose an individual fitted model, load the `.RData` file containing that model, source **diagnostic_information.R**, call `diagnostic_information(fit_object)`, and then display the desired returned plot or table component.
 - Note (5): All paths in the reproduction workflow are defined relative to the repository root returned by `getwd()`. In our setup, the repository root is `D:/Data_and_Code/`.
+- Note (6): Because the handling of missing values relies on random-number generation controlled by `set.seed()`, the outcomes of 'simSEM25.R', 'simSEM50.R', 'simSEM75.R', 'fit_aids_fixalpha.R', and 'fit_aids.R' may be slightly different from the reported results in the manuscript. Nevertheless, similar results can still be obtained, and different set.seed(#) values do not affect the general conclusions of the manuscript.
