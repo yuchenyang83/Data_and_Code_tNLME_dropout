@@ -5,7 +5,7 @@
 #                    Nonlinear Mixed-Effects Framework for Heavy-Tailed Data
 #                    with Informative Dropout"
 #   Authors     :    Yu-Chen Yang, Tsung-I Lin, Luis M. Castro, and Wan-Lun Wang
-#   Date        :    18.08.2026
+#   Date        :    18.09.2026
 #   Purpose     :    produce Table 1 for the ACTG 398 data by comparing the
 #                    72 candidate NLME and tNLME models across random-effects
 #                    Scenarios (I)-(III), four within-subject correlation

@@ -5,8 +5,8 @@
 #                    Nonlinear Mixed-Effects Framework for Heavy-Tailed Data
 #                    with Informative Dropout"
 #   Authors     :    Yu-Chen Yang, Tsung-I Lin, Luis M. Castro, and Wan-Lun Wang
-#   Date        :    18.08.2026
-#   Purpose     :    perform the Appendix F SAEM tuning sensitivity analysis
+#   Date        :    18.09.2026
+#   Purpose     :    perform the Appendix E SAEM tuning sensitivity analysis
 #                    for the Scenario (III) AR(1) tNLME model under MCAR, MAR,
 #                    and MNAR by varying K = 5, 10, 15 and c = 1.8, 2.4, 3.0
 #
@@ -47,10 +47,10 @@ actg398[actg398$patid == 1, ]
 
 table(actg398$trtarm[actg398$calwk == 0])
 table(actg398$trtarm[actg398$calwk == 0], actg398$nnrti[actg398$calwk == 0])
-actg398$trtarm[actg398$trtarm == 1] <- 0
-actg398$trtarm[actg398$trtarm == 2] <- 0
-actg398$trtarm[actg398$trtarm == 3] <- 0
-actg398$trtarm[actg398$trtarm == 4] <- 1
+actg398$trtarm[actg398$trtarm == 1] <- 1
+actg398$trtarm[actg398$trtarm == 2] <- 1
+actg398$trtarm[actg398$trtarm == 3] <- 1
+actg398$trtarm[actg398$trtarm == 4] <- 0
 table(actg398$trtarm[actg398$calwk == 0])
 
 # iid <- which(actg398$txday[actg398$calwk == 0] != 0)
@@ -576,114 +576,339 @@ SAVE_PATH <- file.path(PATH, "Data", "sensitivity_SAEM")
 ############################################################
 
 source(paste0(PATH, "/function/analyze_realdata_AIDS_sensitivity.R"))
-source(paste0(PATH, "/function/NLMMmissingSAEM_sensitivity.r"))
-source(paste0(PATH, "/function/tNLMMmissingSAEM_sensitivity.r"))
+source(paste0(PATH, "/function/NLMMmissingSAEM_sensitivity.R"))
+source(paste0(PATH, "/function/tNLMMmissingSAEM_sensitivity.R"))
 
 K.list <- c(5, 10, 15)
 c.list <- c(1.8, 2.4, 3.0)
 
-for (K.label in K.list) {
-  for (c.label in c.list) {
-    
-    K.run <- K.label
-    
-    if (K.label == 5 && c.label == 2.4) K.run <- 10
-    if (K.label == 10 && c.label == 2.4) K.run <- 5
-    
-    seed.run <- 20260527
-    
-    if (K.label == 10 && c.label == 2.4) seed.run <- 20250502
-    
-    k.step <- K.run
-    ccc <- c.label
-    
-    kc.tag <- paste0("_k", K.label, "_c", c.label)
-    
-    set.seed(seed.run)
-    
-    fit.t.III.ARp.MNAR <- tNLMM.miss.SAEM(
-      Data,
-      g = 1,
-      init.para = init.t.III.MNAR,
-      cor.type = "ARp",
-      k.step = k.step,
-      ccc = ccc,
-      M = 10,
-      M.LL = M.LL,
-      P = 1,
-      tol = tol,
-      max.iter = max.iter,
-      per = per,
-      mechanism = "MNAR",
-      random.structure = "III"
-    )
-    
-    save(
-      fit.t.III.ARp.MNAR,
-      file = file.path(
-        SAVE_PATH,
-        paste0("fit.t.III.ARp.MNAR", kc.tag, ".RData")
-      )
-    )
-    
-    rm(fit.t.III.ARp.MNAR)
-    
-    set.seed(seed.run)
-    
-    fit.t.III.ARp.MAR <- tNLMM.miss.SAEM(
-      Data,
-      g = 1,
-      init.para = init.t.III.MAR,
-      cor.type = "ARp",
-      k.step = k.step,
-      ccc = ccc,
-      M = 10,
-      M.LL = M.LL,
-      P = 1,
-      tol = tol,
-      max.iter = max.iter,
-      per = per,
-      mechanism = "MAR",
-      random.structure = "III"
-    )
-    
-    save(
-      fit.t.III.ARp.MAR,
-      file = file.path(
-        SAVE_PATH,
-        paste0("fit.t.III.ARp.MAR", kc.tag, ".RData")
-      )
-    )
-    
-    rm(fit.t.III.ARp.MAR)
-    
-    set.seed(seed.run)
-    
-    fit.t.III.ARp.MCAR <- tNLMM.miss.SAEM(
-      Data,
-      g = 1,
-      init.para = init.t.III.MCAR,
-      cor.type = "ARp",
-      k.step = k.step,
-      ccc = ccc,
-      M = 10,
-      M.LL = M.LL,
-      P = 1,
-      tol = tol,
-      max.iter = max.iter,
-      per = per,
-      mechanism = "MCAR",
-      random.structure = "III"
-    )
-    
-    save(
-      fit.t.III.ARp.MCAR,
-      file = file.path(
-        SAVE_PATH,
-        paste0("fit.t.III.ARp.MCAR", kc.tag, ".RData")
-      )
-    )
-    
-    rm(fit.t.III.ARp.MCAR)
-  }
-}
+cor.type <- c("ARp")
+
+fit.t.III.ARp.MNAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MNAR, cor.type = cor.type,
+  k.step = 5, ccc = 1.8, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MNAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MNAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MNAR_k5_c1.8.RData")
+)
+rm(fit.t.III.ARp.MNAR)
+
+fit.t.III.ARp.MAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MAR, cor.type = cor.type,
+  k.step = 5, ccc = 1.8, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MAR_k5_c1.8.RData")
+)
+rm(fit.t.III.ARp.MAR)
+
+fit.t.III.ARp.MCAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MCAR, cor.type = cor.type,
+  k.step = 5, ccc = 1.8, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MCAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MCAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MCAR_k5_c1.8.RData")
+)
+rm(fit.t.III.ARp.MCAR)
+
+fit.t.III.ARp.MNAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MNAR, cor.type = cor.type,
+  k.step = 10, ccc = 2.4, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MNAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MNAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MNAR_k5_c2.4.RData")
+)
+rm(fit.t.III.ARp.MNAR)
+
+fit.t.III.ARp.MAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MAR, cor.type = cor.type,
+  k.step = 10, ccc = 2.4, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MAR_k5_c2.4.RData")
+)
+rm(fit.t.III.ARp.MAR)
+
+fit.t.III.ARp.MCAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MCAR, cor.type = cor.type,
+  k.step = 10, ccc = 2.4, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MCAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MCAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MCAR_k5_c2.4.RData")
+)
+rm(fit.t.III.ARp.MCAR)
+
+fit.t.III.ARp.MNAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MNAR, cor.type = cor.type,
+  k.step = 5, ccc = 3.0, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MNAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MNAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MNAR_k5_c3.RData")
+)
+rm(fit.t.III.ARp.MNAR)
+
+fit.t.III.ARp.MAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MAR, cor.type = cor.type,
+  k.step = 5, ccc = 3.0, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MAR_k5_c3.RData")
+)
+rm(fit.t.III.ARp.MAR)
+
+fit.t.III.ARp.MCAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MCAR, cor.type = cor.type,
+  k.step = 5, ccc = 3.0, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MCAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MCAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MCAR_k5_c3.RData")
+)
+rm(fit.t.III.ARp.MCAR)
+
+fit.t.III.ARp.MNAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MNAR, cor.type = cor.type,
+  k.step = 10, ccc = 1.8, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MNAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MNAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MNAR_k10_c1.8.RData")
+)
+rm(fit.t.III.ARp.MNAR)
+
+fit.t.III.ARp.MAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MAR, cor.type = cor.type,
+  k.step = 10, ccc = 1.8, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MAR_k10_c1.8.RData")
+)
+rm(fit.t.III.ARp.MAR)
+
+fit.t.III.ARp.MCAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MCAR, cor.type = cor.type,
+  k.step = 10, ccc = 1.8, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MCAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MCAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MCAR_k10_c1.8.RData")
+)
+rm(fit.t.III.ARp.MCAR)
+
+set.seed(20260606)
+fit.t.III.ARp.MNAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MNAR, cor.type = cor.type,
+  k.step = 5, ccc = 2.4, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MNAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MNAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MNAR_k10_c2.4.RData")
+)
+rm(fit.t.III.ARp.MNAR)
+
+set.seed(20250502)
+fit.t.III.ARp.MAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MAR, cor.type = cor.type,
+  k.step = 5, ccc = 2.4, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MAR_k10_c2.4.RData")
+)
+rm(fit.t.III.ARp.MAR)
+
+set.seed(20260606)
+fit.t.III.ARp.MCAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MCAR, cor.type = cor.type,
+  k.step = 5, ccc = 2.4, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MCAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MCAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MCAR_k10_c2.4.RData")
+)
+rm(fit.t.III.ARp.MCAR)
+
+
+fit.t.III.ARp.MNAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MNAR, cor.type = cor.type,
+  k.step = 10, ccc = 3.0, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MNAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MNAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MNAR_k10_c3.RData")
+)
+rm(fit.t.III.ARp.MNAR)
+
+fit.t.III.ARp.MAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MAR, cor.type = cor.type,
+  k.step = 10, ccc = 3.0, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MAR_k10_c3.RData")
+)
+rm(fit.t.III.ARp.MAR)
+
+fit.t.III.ARp.MCAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MCAR, cor.type = cor.type,
+  k.step = 10, ccc = 3.0, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MCAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MCAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MCAR_k10_c3.RData")
+)
+rm(fit.t.III.ARp.MCAR)
+
+fit.t.III.ARp.MNAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MNAR, cor.type = cor.type,
+  k.step = 15, ccc = 1.8, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MNAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MNAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MNAR_k15_c1.8.RData")
+)
+rm(fit.t.III.ARp.MNAR)
+
+fit.t.III.ARp.MAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MAR, cor.type = cor.type,
+  k.step = 15, ccc = 1.8, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MAR_k15_c1.8.RData")
+)
+rm(fit.t.III.ARp.MAR)
+
+fit.t.III.ARp.MCAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MCAR, cor.type = cor.type,
+  k.step = 15, ccc = 1.8, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MCAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MCAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MCAR_k15_c1.8.RData")
+)
+rm(fit.t.III.ARp.MCAR)
+
+
+fit.t.III.ARp.MNAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MNAR, cor.type = cor.type,
+  k.step = 15, ccc = 2.4, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MNAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MNAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MNAR_k15_c2.4.RData")
+)
+rm(fit.t.III.ARp.MNAR)
+
+fit.t.III.ARp.MAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MAR, cor.type = cor.type,
+  k.step = 15, ccc = 2.4, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MAR_k15_c2.4.RData")
+)
+rm(fit.t.III.ARp.MAR)
+
+fit.t.III.ARp.MCAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MCAR, cor.type = cor.type,
+  k.step = 15, ccc = 2.4, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MCAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MCAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MCAR_k15_c2.4.RData")
+)
+rm(fit.t.III.ARp.MCAR)
+
+fit.t.III.ARp.MNAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MNAR, cor.type = cor.type,
+  k.step = 15, ccc = 3.0, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MNAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MNAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MNAR_k15_c3.RData")
+)
+rm(fit.t.III.ARp.MNAR)
+
+fit.t.III.ARp.MAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MAR, cor.type = cor.type,
+  k.step = 15, ccc = 3.0, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MAR_k15_c3.RData")
+)
+rm(fit.t.III.ARp.MAR)
+
+fit.t.III.ARp.MCAR <- tNLMM.miss.SAEM(
+  Data, g = 1, init.para = init.t.III.MCAR, cor.type = cor.type,
+  k.step = 15, ccc = 3.0, M = 10, M.LL = M.LL, P = 1,
+  tol = tol, max.iter = max.iter, per = per,
+  mechanism = "MCAR", random.structure = "III"
+)
+save(
+  fit.t.III.ARp.MCAR,
+  file = file.path(SAVE_PATH, "fit.t.III.ARp.MCAR_k15_c3.RData")
+)
+rm(fit.t.III.ARp.MCAR)

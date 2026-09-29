@@ -100,11 +100,11 @@ for (Rep in binrep:Repp) {
     
     n <- N[ll]
     
-    if (n == 25) PATH1 <- file.path(PATH, "Data", "simulation", "SS-simulation-t25-50", "SIM1")
-    if (n == 50) PATH1 <- file.path(PATH, "Data", "simulation", "SS-simulation-t25-50", "SIM2")
-    if (n == 100) PATH1 <- file.path(PATH, "Data", "simulation", "SS-simulation-t25-50", "SIM3")
-    if (n == 200) PATH1 <- file.path(PATH, "Data", "simulation", "SS-simulation-t25-50", "SIM4")
-    if (n == 400) PATH1 <- file.path(PATH, "Data", "simulation", "SS-simulation-t25-50", "SIM5")
+    if (n == 25) PATH1 <- file.path(PATH, "Data", "simulation", "SS-simulation-t50-50", "SIM1")
+    if (n == 50) PATH1 <- file.path(PATH, "Data", "simulation", "SS-simulation-t50-50", "SIM2")
+    if (n == 100) PATH1 <- file.path(PATH, "Data", "simulation", "SS-simulation-t50-50", "SIM3")
+    if (n == 200) PATH1 <- file.path(PATH, "Data", "simulation", "SS-simulation-t50-50", "SIM4")
+    if (n == 400) PATH1 <- file.path(PATH, "Data", "simulation", "SS-simulation-t50-50", "SIM5")
   seednum = Rep + n*1000 + 2e8
   set.seed(seednum)
   cat(paste(c(rep('=', 15), rep(' ', 3), 'The ', Rep, ' time simulation: n = ', n, rep(' ', 3), rep('=', 15)), sep = '', collapse = ''), '\n')

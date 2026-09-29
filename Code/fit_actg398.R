@@ -5,7 +5,7 @@
 #                    Nonlinear Mixed-Effects Framework for Heavy-Tailed Data
 #                    with Informative Dropout"
 #   Authors     :    Yu-Chen Yang, Tsung-I Lin, Luis M. Castro, and Wan-Lun Wang
-#   Date        :    18.08.2026
+#   Date        :    18.09.2026
 #   Purpose     :    fit the ACTG 398 data using the NLME and tNLME models under
 #                    MCAR, MAR, and MNAR across random-effects Scenarios (I)-(III)
 #                    and UNC, CS, AR(1), and MA(1) within-subject correlations;
@@ -50,10 +50,10 @@ actg398[actg398$patid == 1, ]
 
 table(actg398$trtarm[actg398$calwk == 0])
 table(actg398$trtarm[actg398$calwk == 0], actg398$nnrti[actg398$calwk == 0])
-actg398$trtarm[actg398$trtarm == 1] <- 0
-actg398$trtarm[actg398$trtarm == 2] <- 0
-actg398$trtarm[actg398$trtarm == 3] <- 0
-actg398$trtarm[actg398$trtarm == 4] <- 1
+actg398$trtarm[actg398$trtarm == 1] <- 1
+actg398$trtarm[actg398$trtarm == 2] <- 1
+actg398$trtarm[actg398$trtarm == 3] <- 1
+actg398$trtarm[actg398$trtarm == 4] <- 0
 table(actg398$trtarm[actg398$calwk == 0])
 
 # iid <- which(actg398$txday[actg398$calwk == 0] != 0)
@@ -658,7 +658,7 @@ fit.t.I.UNC.MNAR <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.I.MNAR, cor.
 # save.image(file.path(SAVE_PATH, "fit.t.I.UNC.MNAR.RData"))
 
 cor.type = c("UNC")
-set.seed(20260527)
+set.seed(20260514)
 fit.t.I.UNC.MAR <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.I.MAR, cor.type = c("UNC"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MAR", random.structure = "I")
 # save.image(file.path(SAVE_PATH, "fit.t.I.UNC.MAR.RData"))
 
@@ -668,7 +668,7 @@ fit.t.I.UNC.MCAR <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.I.MCAR, cor.
 save.image(file.path(SAVE_PATH, "fit.t.I.UNC.MCAR0527.RData"))
 
 cor.type = c("ARp")
-set.seed(20260610)
+set.seed(20260509)
 fit.t.I.ARp.MNAR <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.I.MNAR, cor.type = c("ARp"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MNAR", random.structure = "I")
 # save.image(file.path(SAVE_PATH, "fit.t.I.ARp.MNAR.RData"))
 
@@ -689,7 +689,7 @@ fit.t.I.CS.MNAR <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.I.MNAR, cor.t
 # save.image(file.path(SAVE_PATH, "fit.t.I.CS.MNAR.RData"))
 
 cor.type = c("CS")
-set.seed(20260601)
+set.seed(20260608)
 fit.t.I.CS.MAR <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.I.MAR, cor.type = c("CS"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MAR", random.structure = "I")
 # save.image(file.path(SAVE_PATH, "fit.t.I.CS.MAR.RData"))
 
@@ -936,11 +936,9 @@ save.image(file.path(SAVE_PATH, "fit.t.III.UNC.MCAR.RData"))
 
 
 cor.type = c("ARp")
-set.seed(20260527)
+set.seed(20260606)
 fit.t.III.ARp.MNAR <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.III.MNAR, cor.type = c("ARp"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MNAR", random.structure = "III")
 save.image(file.path(SAVE_PATH, "fit.t.III.ARp.MNAR.RData"))
-#7661.114
-
 
 cor.type = c("ARp")
 set.seed(20250502)
@@ -948,7 +946,7 @@ fit.t.III.ARp.MAR <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.III.MAR, co
 save.image(file.path(SAVE_PATH, "fit.t.III.ARp.MAR.RData"))
 
 cor.type = c("ARp")
-set.seed(20260527)
+set.seed(20260606)
 fit.t.III.ARp.MCAR <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.III.MCAR, cor.type = c("ARp"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MCAR", random.structure = "III")
 save.image(file.path(SAVE_PATH, "fit.t.III.ARp.MCAR.RData"))
 
@@ -985,7 +983,7 @@ save.image(file.path(SAVE_PATH, "fit.t.III.BAND1.MCAR.RData"))
 
 
 cor.type = c("ARp")
-set.seed(20260527)
+set.seed(20260606)
 fit.t.III.ARp.MNAR.5000 <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.III.MNAR, cor.type = c("ARp"), M = 10, M.LL = M.LL, P = 1, tol = 1e-10, max.iter = 5000, per = per, mechanism = "MNAR", random.structure = "III")
 save.image(file.path(SAVE_PATH, "fit.t.III.ARp.MNAR5000.RData"))
 
@@ -997,68 +995,55 @@ save.image(file.path(SAVE_PATH, "fit.t.III.ARp.MNAR5000.RData"))
 ############################################################
 
 cor.type = c("UNC")
-set.seed(20260526)
 fit.N.III.UNC.MNAR.nls <- NLMM.miss.SAEM(Data, g = 1, init.para = init.N.III.MNAR.nls, cor.type = c("UNC"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MNAR", random.structure = "III")
 save.image(file.path(SAVE_PATH, "fit.N.III.UNC.MNAR.nls.RData"))
 
 cor.type = c("UNC")
-set.seed(20260526)
 fit.N.III.UNC.MAR.nls <- NLMM.miss.SAEM(Data, g = 1, init.para = init.N.III.MAR.nls, cor.type = c("UNC"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MAR", random.structure = "III")
 save.image(file.path(SAVE_PATH, "fit.N.III.UNC.MAR.nls.RData"))
 
 cor.type = c("UNC")
-set.seed(20260526)
 fit.N.III.UNC.MCAR.nls <- NLMM.miss.SAEM(Data, g = 1, init.para = init.N.III.MCAR.nls, cor.type = c("UNC"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MCAR", random.structure = "III")
 save.image(file.path(SAVE_PATH, "fit.N.III.UNC.MCAR.nls.RData"))
 
 cor.type = c("ARp")
-set.seed(20260527)
 fit.N.III.ARp.MNAR.nls <- NLMM.miss.SAEM(Data, g = 1, init.para = init.N.III.MNAR.nls, cor.type = c("ARp"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MNAR", random.structure = "III")
 #save.image(file.path(SAVE_PATH, "fit.N.III.ARp.MNAR.nls.RData"))
 
 cor.type = c("ARp")
-set.seed(20260527)
 fit.N.III.ARp.MAR.nls <- NLMM.miss.SAEM(Data, g = 1, init.para = init.N.III.MAR.nls, cor.type = c("ARp"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MAR", random.structure = "III")
 #save.image(file.path(SAVE_PATH, "fit.N.III.ARp.MAR.nls.RData"))
 
 cor.type = c("ARp")
-set.seed(20260527)
 fit.N.III.ARp.MCAR.nls <- NLMM.miss.SAEM(Data, g = 1, init.para = init.N.III.MCAR.nls, cor.type = c("ARp"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MCAR", random.structure = "III")
 save.image(file.path(SAVE_PATH, "fit.N.III.ARp.MCAR.nls0527.RData"))
 
 cor.type = c("CS")
-set.seed(20260526)
 fit.N.III.CS.MNAR.nls <- NLMM.miss.SAEM(Data, g = 1, init.para = init.N.III.MNAR.nls, cor.type = c("CS"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MNAR", random.structure = "III")
 save.image(file.path(SAVE_PATH, "fit.N.III.CS.MNAR.nls.RData"))
 
 cor.type = c("CS")
-set.seed(20260526)
 fit.N.III.CS.MAR.nls <- NLMM.miss.SAEM(Data, g = 1, init.para = init.N.III.MAR.nls, cor.type = c("CS"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MAR", random.structure = "III")
 save.image(file.path(SAVE_PATH, "fit.N.III.CS.MAR.nls.RData"))
 
 cor.type = c("CS")
-set.seed(20260526)
 fit.N.III.CS.MCAR.nls <- NLMM.miss.SAEM(Data, g = 1, init.para = init.N.III.MCAR.nls, cor.type = c("CS"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MCAR", random.structure = "III")
 save.image(file.path(SAVE_PATH, "fit.N.III.CS.MCAR.nls.RData"))
 
 cor.type = c("BAND1")
-set.seed(20260529)
 fit.N.III.BAND1.MNAR.nls <- NLMM.miss.SAEM(Data, g = 1, init.para = init.N.III.MNAR.nls, cor.type = c("BAND1"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MNAR", random.structure = "III")
 save.image(file.path(SAVE_PATH, "fit.N.III.BAND1.MNAR.nls.RData"))
 
 cor.type = c("BAND1")
-set.seed(20260530)
 fit.N.III.BAND1.MAR.nls <- NLMM.miss.SAEM(Data, g = 1, init.para = init.N.III.MAR.nls, cor.type = c("BAND1"), M = 10, M.LL = M.LL, P = 1, tol = 1e-8, max.iter = max.iter, per = per, mechanism = "MAR", random.structure = "III")
 save.image(file.path(SAVE_PATH, "fit.N.III.BAND1.MAR.nls0530.RData"))
 
 cor.type = c("BAND1")
-set.seed(20260529)
 fit.N.III.BAND1.MCAR.nls <- NLMM.miss.SAEM(Data, g = 1, init.para = init.N.III.MCAR.nls, cor.type = c("BAND1"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MCAR", random.structure = "III")
 save.image(file.path(SAVE_PATH, "fit.N.III.BAND1.MCAR.nls0529.RData"))
 
 
 cor.type = c("BAND1")
-set.seed(20260531)
 fit.N.III.BAND1.MNAR.nls <- NLMM.miss.SAEM(Data, g = 1, init.para = init.N.III.MNAR.nls, cor.type = c("BAND1"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MNAR", random.structure = "III")
 save.image(file.path(SAVE_PATH, "fit.N.III.BAND1.MNAR.nls.RData"))
 
@@ -1068,84 +1053,41 @@ save.image(file.path(SAVE_PATH, "fit.N.III.BAND1.MNAR.nls.RData"))
 ############################################################
 
 cor.type = c("UNC")
-set.seed(20260528)
 fit.t.III.UNC.MNAR.nls <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.III.MNAR.nls, cor.type = c("UNC"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MNAR", random.structure = "III")
-#save.image(file.path(SAVE_PATH, "fit.t.III.UNC.MNAR.nls.RData"))
+
 
 cor.type = c("UNC")
-set.seed(20260528)
 fit.t.III.UNC.MAR.nls <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.III.MAR.nls, cor.type = c("UNC"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MAR", random.structure = "III")
-#save.image(file.path(SAVE_PATH, "fit.t.III.UNC.MAR.nls.RData"))
 
 cor.type = c("UNC")
-set.seed(20260528)
 fit.t.III.UNC.MCAR.nls <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.III.MCAR.nls, cor.type = c("UNC"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MCAR", random.structure = "III")
-save.image(file.path(SAVE_PATH, "fit.t.III.UNC.MCAR.nls0528.RData"))
 
 cor.type = c("ARp")
-set.seed(20260526)
 fit.t.III.ARp.MNAR.nls <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.III.MNAR.nls, cor.type = c("ARp"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MNAR", random.structure = "III")
-#save.image(file.path(SAVE_PATH, "fit.t.III.ARp.MNAR.nls.RData"))
 
 cor.type = c("ARp")
-set.seed(20260526)
 fit.t.III.ARp.MAR.nls <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.III.MAR.nls, cor.type = c("ARp"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MAR", random.structure = "III")
-#save.image(file.path(SAVE_PATH, "fit.t.III.ARp.MAR.nls.RData"))
 
 cor.type = c("ARp")
-set.seed(20260526)
 fit.t.III.ARp.MCAR.nls <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.III.MCAR.nls, cor.type = c("ARp"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MCAR", random.structure = "III")
-save.image(file.path(SAVE_PATH, "fit.t.III.ARp.MCAR.nls.RData"))
 
 cor.type = c("CS")
-set.seed(20260531)
 fit.t.III.CS.MNAR.nls <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.III.MNAR.nls, cor.type = c("CS"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MNAR", random.structure = "III")
-#save.image(file.path(SAVE_PATH, "fit.t.III.CS.MNAR.nls.RData"))
 
 cor.type = c("CS")
-set.seed(20260531)
 fit.t.III.CS.MAR.nls <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.III.MAR.nls, cor.type = c("CS"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MAR", random.structure = "III")
-#save.image(file.path(SAVE_PATH, "fit.t.III.CS.MAR.nls.RData"))
 
 cor.type = c("CS")
-set.seed(20260531)
 fit.t.III.CS.MCAR.nls <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.III.MCAR.nls, cor.type = c("CS"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MCAR", random.structure = "III")
-save.image(file.path(SAVE_PATH, "fit.t.III.CS.MCAR.nls20260531.RData"))
 
 cor.type = c("BAND1")
-set.seed(20260528)
 fit.t.III.BAND1.MNAR.nls <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.III.MNAR.nls, cor.type = c("BAND1"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MNAR", random.structure = "III")
-#save.image(file.path(SAVE_PATH, "fit.t.III.BAND1.MNAR.nls.RData"))
 
 cor.type = c("BAND1")
-set.seed(20260528)
 fit.t.III.BAND1.MAR.nls <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.III.MAR.nls, cor.type = c("BAND1"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MAR", random.structure = "III")
-#save.image(file.path(SAVE_PATH, "fit.t.III.BAND1.MAR.nls.RData"))
 
 cor.type = c("BAND1")
-set.seed(2026052)
 fit.t.III.BAND1.MCAR.nls <- tNLMM.miss.SAEM(Data, g = 1, init.para = init.t.III.MCAR.nls, cor.type = c("BAND1"), M = 10, M.LL = M.LL, P = 1, tol = tol, max.iter = max.iter, per = per, mechanism = "MCAR", random.structure = "III")
-save.image(file.path(SAVE_PATH, "fit.t.III.BAND1.MCAR.nls0528.RData"))
 
-################################################################################
-# Save fitted-model objects used by the reproduction scripts
-################################################################################
 
-PATH <- normalizePath(getwd(), winslash = "/", mustWork = TRUE)
-SAVE_PATH <- file.path(PATH, "Data")
-
-objects.I <- grep("^fit\\.(N|t)\\.I\\.", ls(), value = TRUE)
-objects.II <- grep("^fit\\.(N|t)\\.II\\.", ls(), value = TRUE)
-
-objects.III <- grep("^fit\\.(N|t)\\.III\\.", ls(), value = TRUE)
-objects.III <- objects.III[!grepl("\\.nls$", objects.III)]
-
-objects.III.nls <- grep("^fit\\.(N|t)\\.III\\..*\\.nls$", ls(), value = TRUE)
-
-save(list = c("Data", objects.I), file = file.path(SAVE_PATH, "fit_I_result.RData"))
-save(list = c("Data", objects.II), file = file.path(SAVE_PATH, "fit_II_result.RData"))
-save(list = c("Data", objects.III), file = file.path(SAVE_PATH, "fit_III_result.RData"))
-save(list = c("Data", objects.III.nls), file = file.path(SAVE_PATH, "fit_III_result_nls.RData"))
-
-rm(objects.I, objects.II, objects.III, objects.III.nls)
 

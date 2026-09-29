@@ -5,7 +5,7 @@
 #                    Nonlinear Mixed-Effects Framework for Heavy-Tailed Data
 #                    with Informative Dropout"
 #   Authors     :    Yu-Chen Yang, Tsung-I Lin, Luis M. Castro, and Wan-Lun Wang
-#   Date        :    18.08.2026
+#   Date        :    18.09.2026
 #   Purpose     :    produce Figure 2 for the ACTG 398 data by summarizing the
 #                    fixed-alpha2 sensitivity analysis under the selected tNLME
 #                    model with Scenario (III), AR(1) errors, and MNAR dropout
@@ -133,13 +133,13 @@ kk_key <- kk %>%
   distinct(beta, alpha, .keep_all = TRUE)
 
 ya1 <- ggplot(kk, aes(x = alpha, y = est.beta)) +
-  geom_line(aes(color = "Estimated value"), linewidth = 0.8) +
+  geom_line(aes(color = "Estimated value"), linewidth = 1.1) +
   geom_errorbar(
     data = kk_key,
     aes(ymin = est.lower, ymax = est.upper, color = "95% confidence interval"),
-    width = 0.9, linetype = 1, linewidth = 0.65
+    width = 0.7, linetype = 1, linewidth = 0.5
   ) +
-  geom_point(aes(color = "Estimated value"), size = 3) +
+  geom_point(aes(color = "Estimated value"), size = 3.4) +
   facet_wrap(. ~ beta, labeller = label_parsed, scales = "free_y", ncol = 4) +
   scale_x_continuous(breaks = c(-6, -4, -2, -1, 0, 1, 2, 4, 6)) +
   scale_y_continuous(labels = function(x) format(x, trim = TRUE, scientific = FALSE, digits = 4)) +
@@ -168,10 +168,10 @@ ya1 <- ggplot(kk, aes(x = alpha, y = est.beta)) +
     )
   )
 
-# print(ya1)
+print(ya1)
 
-# postscript(paste0("D:/Data_and_Code", "/Result/Figur2.eps"), width = 15, height = 10, paper = "special")
-# ya1
+# postscript(paste0(PATH, "/Result/Figure2.eps"), width = 15, height = 10, paper = "special")
+# print(ya1)
 # dev.off()
 PATH <- normalizePath(getwd(), winslash = "/", mustWork = TRUE)
 

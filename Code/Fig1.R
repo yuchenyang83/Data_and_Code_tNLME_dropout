@@ -5,7 +5,7 @@
 #                    Nonlinear Mixed-Effects Framework for Heavy-Tailed Data
 #                    with Informative Dropout"
 #   Authors     :    Yu-Chen Yang, Tsung-I Lin, Luis M. Castro, and Wan-Lun Wang
-#   Date        :    18.08.2026
+#   Date        :    18.09.2026
 #   Purpose     :    produce Figure 1 for the ACTG 398 data, including the
 #                    longitudinal viral-load trajectories, visit-specific
 #                    distributions, observed-response frequencies, and
@@ -39,10 +39,10 @@ actg398[actg398$patid == 229, ]$txday <- actg398[actg398$patid == 229, ]$txday -
 
 table(actg398$trtarm[actg398$calwk == 0])
 table(actg398$trtarm[actg398$calwk == 0], actg398$nnrti[actg398$calwk == 0])
-actg398$trtarm[actg398$trtarm == 1] <- 0
-actg398$trtarm[actg398$trtarm == 2] <- 0
-actg398$trtarm[actg398$trtarm == 3] <- 0
-actg398$trtarm[actg398$trtarm == 4] <- 1
+actg398$trtarm[actg398$trtarm == 1] <- 1
+actg398$trtarm[actg398$trtarm == 2] <- 1
+actg398$trtarm[actg398$trtarm == 3] <- 1
+actg398$trtarm[actg398$trtarm == 4] <- 0
 table(actg398$trtarm[actg398$calwk == 0])
 
 iid <- which(actg398$txday[actg398$calwk == 0] != 0)
@@ -107,7 +107,7 @@ obs <- actg398.miss %>%
   filter(!is.na(logrna)) %>%
   mutate(
     calwk  = as.numeric(calwk),
-    trtarm = factor(trtarm, levels = c(0, 1), labels = c("Therapy", "Placebo"))
+    trtarm = factor(trtarm, levels = c(1, 0), labels = c("Therapy", "Placebo"))
   )
 
 day_levels <- ll
@@ -188,9 +188,8 @@ panel_box <- annotate(
 )
 
 
-## ------------------------------------------------------------
+
 ## subject-level outliers extracted once from the selected fitted model
-## ------------------------------------------------------------
 outlier.file <- file.path(PATH, "Data", "Figure1_outlier_subjects.txt")
 outlier.data <- read.table(outlier.file, header = TRUE, sep = "\t", stringsAsFactors = FALSE)
 if (!"Subject" %in% names(outlier.data)) stop("Figure1_outlier_subjects.txt must contain a Subject column.")
@@ -397,10 +396,10 @@ actg398[actg398$patid == 229, ]$txday <- actg398[actg398$patid == 229, ]$txday -
 
 table(actg398$trtarm[actg398$calwk == 0])
 table(actg398$trtarm[actg398$calwk == 0], actg398$nnrti[actg398$calwk == 0])
-actg398$trtarm[actg398$trtarm == 1] <- 0
-actg398$trtarm[actg398$trtarm == 2] <- 0
-actg398$trtarm[actg398$trtarm == 3] <- 0
-actg398$trtarm[actg398$trtarm == 4] <- 1
+actg398$trtarm[actg398$trtarm == 1] <- 1
+actg398$trtarm[actg398$trtarm == 2] <- 1
+actg398$trtarm[actg398$trtarm == 3] <- 1
+actg398$trtarm[actg398$trtarm == 4] <- 0
 table(actg398$trtarm[actg398$calwk == 0])
 
 iid <- which(actg398$txday[actg398$calwk == 0] != 0)
@@ -471,7 +470,7 @@ obs_by_group <- actg398.miss %>%
   filter(!is.na(logrna)) %>%
   distinct(Subject, trtarm, Time) %>%
   mutate(
-    trtarm = factor(trtarm, levels = c(0, 1),
+    trtarm = factor(trtarm, levels = c(1, 0),
                     labels = c("Therapy observed", "Placebo observed")),
     Time = as.numeric(Time)
   ) %>%
@@ -621,7 +620,7 @@ source(paste0(PATH, "/function/multiplot.R"))
 layout <- matrix(c(2,1,2,1), ncol = 2, byrow = TRUE)
 # multiplot(plotlist = list(p_bottom, p_top), layout = layout)
 
-# postscript(paste0(PATH, "/Result/Figur1.eps"), width = 15, height = 10, paper = "special")
+# postscript(paste0(PATH, "/Result/Figure1.eps"), width = 15, height = 10, paper = "special")
 # multiplot(plotlist = list(p_bottom, p_top), layout = layout)
 # dev.off()
 

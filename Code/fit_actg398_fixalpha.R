@@ -5,7 +5,7 @@
 #                    Nonlinear Mixed-Effects Framework for Heavy-Tailed Data
 #                    with Informative Dropout"
 #   Authors     :    Yu-Chen Yang, Tsung-I Lin, Luis M. Castro, and Wan-Lun Wang
-#   Date        :    18.08.2026
+#   Date        :    18.09.2026
 #   Purpose     :    fit the selected Scenario (III) AR(1) tNLME model under
 #                    MNAR for the ACTG 398 data over a grid of fixed alpha2
 #                    values for the sensitivity analysis reported in Figure 2
@@ -19,7 +19,7 @@
 #
 ################################################################################
 rm(list = ls())
-set.seed(20260517)
+set.seed(20260518)
 PATH <- normalizePath(getwd(), winslash = "/", mustWork = TRUE)
 actg398 <- read.table(paste(PATH, "/Data/source/actg398.txt", sep = ""), header = T)
 table(actg398$calwk)
@@ -44,10 +44,10 @@ actg398[actg398$patid == 1, ]
 
 table(actg398$trtarm[actg398$calwk == 0])
 table(actg398$trtarm[actg398$calwk == 0], actg398$nnrti[actg398$calwk == 0])
-actg398$trtarm[actg398$trtarm == 1] <- 0
-actg398$trtarm[actg398$trtarm == 2] <- 0
-actg398$trtarm[actg398$trtarm == 3] <- 0
-actg398$trtarm[actg398$trtarm == 4] <- 1
+actg398$trtarm[actg398$trtarm == 1] <- 1
+actg398$trtarm[actg398$trtarm == 2] <- 1
+actg398$trtarm[actg398$trtarm == 3] <- 1
+actg398$trtarm[actg398$trtarm == 4] <- 0
 table(actg398$trtarm[actg398$calwk == 0])
 
 # iid <- which(actg398$txday[actg398$calwk == 0] != 0)
@@ -577,24 +577,26 @@ M <- 10
 cor.type <- "UNC"
 mechanism <- "MNAR"
 
+source(paste(PATH, "/function/fix_alpha/run_sensitivity_analysis.R", sep = ""))
 source(paste(PATH, "/function/fix_alpha/tNLMMmissingSAEM_fixalpha.R", sep = ""))
 ###############
 ###############
 cor.type <- "ARp"
 
-ll <- c(0.0001, 0.001, 0.01, 0.05, 0.1, 0.5, 1, 2, 4, 6)
-ll <- c(ll, -c(0.0001, 0.001, 0.01, 0.05, 0.1, 0.5, 1, 2, 4, 6))
+ll <-rev(c(0.0001, 0.001, 0.01, 0.05, 0.1, 0.5, 1, 2, 4, 6))
+ll <- c(ll, -rev(c(0.0001, 0.001, 0.01, 0.05, 0.1, 0.5, 1, 2, 4, 6)))
 
 result <- NULL
 per <- 500
 
 alpha.base <- alpha
+init.t.III.MNAR$nu = 5
 
-for (iii in 1:length(ll)) {
+for (iii in c(1:20)) {
   
-  kkk <- 20250101 + iii
+  kkk <- 20260606
   set.seed(kkk)
-  print(kkk)
+  print(iii)
   
   cor.type <- "ARp"
   
